@@ -1,6 +1,27 @@
 namespace KS4033 {
 
     // =========================
+    // OPÇÕES DOS DROPDOWNS
+    // =========================
+
+    export enum Motor {
+        //% block="Motor Direito"
+        Direito,
+        //% block="Motor Esquerdo"
+        Esquerdo,
+        //% block="Todos"
+        Todos
+    }
+
+    export enum Rotacao {
+        //% block="Frente"
+        Frente,
+        //% block="Trás"
+        Tras
+    }
+
+
+    // =========================
     // PINOS DOS MOTORES
     // =========================
 
@@ -27,8 +48,6 @@ namespace KS4033 {
             velocidade = 100
         }
 
-        // 1% = aproximadamente 250
-        // 100% = 1023
         return Math.round(
             250 + (velocidade - 1) * (1023 - 250) / 99
         )
@@ -70,66 +89,40 @@ namespace KS4033 {
     // =========================
 
     //% block="ligar motor $motor velocidade $velocidade % rotação $rotacao"
-    //% motor.defl="Todos"
-    //% motor.shadow="dropdown"
-    //% motor.options="Direito,Esquerdo,Todos"
     //% velocidade.min=0 velocidade.max=100 velocidade.defl=50
     //% velocidade.shadow="slider"
-    //% rotacao.defl="Frente"
-    //% rotacao.shadow="dropdown"
-    //% rotacao.options="Frente,Trás"
     export function ligar(
-        motor: string,
+        motor: Motor,
         velocidade: number,
-        rotacao: string
+        rotacao: Rotacao
     ): void {
 
         let pwm = converterVelocidade(velocidade)
 
-        // -------------------------
-        // MOTOR DIREITO
-        // -------------------------
+        if (motor == Motor.Direito) {
 
-        if (motor == "Direito") {
-
-            if (rotacao == "Frente") {
+            if (rotacao == Rotacao.Frente) {
                 direitoFrente(pwm)
             } else {
                 direitoTras(pwm)
             }
 
-        }
+        } else if (motor == Motor.Esquerdo) {
 
-        // -------------------------
-        // MOTOR ESQUERDO
-        // -------------------------
-
-        else if (motor == "Esquerdo") {
-
-            if (rotacao == "Frente") {
+            if (rotacao == Rotacao.Frente) {
                 esquerdoFrente(pwm)
             } else {
                 esquerdoTras(pwm)
             }
 
-        }
+        } else {
 
-        // -------------------------
-        // TODOS
-        // -------------------------
-
-        else {
-
-            if (rotacao == "Frente") {
-
+            if (rotacao == Rotacao.Frente) {
                 direitoFrente(pwm)
                 esquerdoFrente(pwm)
-
             } else {
-
                 direitoTras(pwm)
                 esquerdoTras(pwm)
-
             }
         }
     }
@@ -140,26 +133,19 @@ namespace KS4033 {
     // =========================
 
     //% block="desligar motor $motor"
-    //% motor.defl="Todos"
-    //% motor.shadow="dropdown"
-    //% motor.options="Direito,Esquerdo,Todos"
-    export function desligar(motor: string): void {
+    export function desligar(motor: Motor): void {
 
-        if (motor == "Direito") {
+        if (motor == Motor.Direito) {
 
             pins.analogWritePin(DIREITO_A, 0)
             pins.analogWritePin(DIREITO_B, 0)
 
-        }
-
-        else if (motor == "Esquerdo") {
+        } else if (motor == Motor.Esquerdo) {
 
             pins.analogWritePin(ESQUERDO_A, 0)
             pins.analogWritePin(ESQUERDO_B, 0)
 
-        }
-
-        else {
+        } else {
 
             pins.analogWritePin(DIREITO_A, 0)
             pins.analogWritePin(DIREITO_B, 0)
