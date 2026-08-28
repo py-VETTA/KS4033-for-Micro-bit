@@ -1,0 +1,12 @@
+{
+    "name": "KS4033",
+    "version": "0.0.1",
+    "description": "Extensão MakeCode para a placa KS4033",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "main.ts"
+    ]
+}
