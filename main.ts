@@ -11,8 +11,20 @@ namespace KS4033 {
         Todos
     }
 
-    //% block="ligar motor $motor velocidade $velocidade"
-    export function ligar(motor: Motor, velocidade: number): void {
+    export enum Rotacao {
+        //% block="Frente"
+        Frente,
+
+        //% block="Trás"
+        Tras
+    }
+
+    //% block="ligar motor $motor velocidade $velocidade rotação $rotacao"
+    export function ligar(
+        motor: Motor,
+        velocidade: number,
+        rotacao: Rotacao
+    ): void {
 
         if (velocidade < 0) {
             velocidade = 0
@@ -28,23 +40,47 @@ namespace KS4033 {
             pwm = 250 + (velocidade - 1) * 773 / 99
         }
 
+        // Motor Direito
         if (motor == Motor.Direito) {
 
-            pins.analogWritePin(AnalogPin.P13, pwm)
-            pins.analogWritePin(AnalogPin.P12, 0)
+            if (rotacao == Rotacao.Frente) {
+                pins.analogWritePin(AnalogPin.P13, pwm)
+                pins.analogWritePin(AnalogPin.P12, 0)
+            } else {
+                pins.analogWritePin(AnalogPin.P13, 0)
+                pins.analogWritePin(AnalogPin.P12, pwm)
+            }
 
+        // Motor Esquerdo
         } else if (motor == Motor.Esquerdo) {
 
-            pins.analogWritePin(AnalogPin.P15, pwm)
-            pins.analogWritePin(AnalogPin.P16, 0)
+            if (rotacao == Rotacao.Frente) {
+                pins.analogWritePin(AnalogPin.P15, pwm)
+                pins.analogWritePin(AnalogPin.P16, 0)
+            } else {
+                pins.analogWritePin(AnalogPin.P15, 0)
+                pins.analogWritePin(AnalogPin.P16, pwm)
+            }
 
+        // Todos
         } else {
 
-            pins.analogWritePin(AnalogPin.P13, pwm)
-            pins.analogWritePin(AnalogPin.P12, 0)
+            if (rotacao == Rotacao.Frente) {
 
-            pins.analogWritePin(AnalogPin.P15, pwm)
-            pins.analogWritePin(AnalogPin.P16, 0)
+                pins.analogWritePin(AnalogPin.P13, pwm)
+                pins.analogWritePin(AnalogPin.P12, 0)
+
+                pins.analogWritePin(AnalogPin.P15, pwm)
+                pins.analogWritePin(AnalogPin.P16, 0)
+
+            } else {
+
+                pins.analogWritePin(AnalogPin.P13, 0)
+                pins.analogWritePin(AnalogPin.P12, pwm)
+
+                pins.analogWritePin(AnalogPin.P15, 0)
+                pins.analogWritePin(AnalogPin.P16, pwm)
+            }
         }
     }
 }
