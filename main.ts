@@ -25,6 +25,7 @@ namespace KS4033 {
     // =========================
 
     //% block="ligar motor $motor velocidade $velocidade rotação $rotacao"
+    //% velocidade.min=0 velocidade.max=100 velocidade.defl=50
     export function ligar(
         motor: Motor,
         velocidade: number,
