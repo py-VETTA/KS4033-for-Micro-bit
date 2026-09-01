@@ -1,3 +1,4 @@
+//% color="#F44336"
 namespace KS4033 {
 
     export enum Motor {
@@ -24,7 +25,7 @@ namespace KS4033 {
     // LIGAR MOTOR
     // =========================
 
-    //% block="ligar motor $motor velocidade $velocidade rotação $rotacao"
+    //% block="Ligar motor $motor velocidade $velocidade rotação $rotacao"
     //% velocidade.min=0 velocidade.max=100 velocidade.defl=50
     export function ligar(
         motor: Motor,
@@ -104,7 +105,7 @@ namespace KS4033 {
     // DESLIGAR MOTOR
     // =========================
 
-    //% block="desligar motor $motor"
+    //% block="Desligar motor $motor"
     export function desligar(motor: Motor): void {
 
         // MOTOR DIREITO
