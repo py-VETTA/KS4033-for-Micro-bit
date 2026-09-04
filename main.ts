@@ -16,6 +16,20 @@ namespace KS4033 {
         Todos
     }
 
+    export enum Motor_Config {
+        //% block="Motor Direito"
+        Direito,
+
+        //% block="Motor Esquerdo"
+        Esquerdo,
+
+        //% block="Todos"
+        Todos,
+
+        //% block="Nenhum"
+        Nenhum
+    }
+
     export enum Rotacao {
         //% block="Frente"
         Frente,
@@ -26,7 +40,7 @@ namespace KS4033 {
 
     //% block="Configuração do KS4033: Velocidade PWM mínima: $pwm Inverter sentido de giro do Motor $motor"
     //% pwm.min=0 pwm.max=1023 pwm.defl=0
-    export function configuracao(pwm: number, motor: Motor): void {
+    export function configuracao(pwm: number, motor: Motor_Config): void {
 
         if (pwm < 0) {
             pwm = 0
@@ -38,13 +52,18 @@ namespace KS4033 {
 
         pwmMinimo = pwm
 
-        if (motor == Motor.Direito) {
-            inverterDireito = !inverterDireito
-        } else if (motor == Motor.Esquerdo) {
-            inverterEsquerdo = !inverterEsquerdo
+        if (motor == Motor_Config.Direito) {
+            inverterDireito = true
+            inverterEsquerdo = false
+        } else if (motor == Motor_Config.Esquerdo) {
+            inverterDireito = false
+            inverterEsquerdo = true
+        } else if (motor == Motor_Config.Todos) {
+            inverterDireito = true
+            inverterEsquerdo = true
         } else {
-            inverterDireito = !inverterDireito
-            inverterEsquerdo = !inverterEsquerdo
+            inverterDireito = false
+            inverterEsquerdo = false
         }
     }
 
