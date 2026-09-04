@@ -44,7 +44,7 @@ namespace KS4033 {
         let pwm = 0
 
         if (velocidade > 0) {
-            pwm = 250 + (velocidade - 1) * 773 / 99
+            pwm = 200 + (velocidade - 1) * 823 / 99
         }
 
 
